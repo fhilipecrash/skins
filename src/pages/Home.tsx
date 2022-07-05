@@ -9,20 +9,20 @@ export function Home() {
       </div>
       <span className="m-6">Seus lances</span>
       <div className="flex">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        <Card isAuctionBid={true}/>
+        <Card isAuctionBid={true}/>
+        <Card isAuctionBid={true}/>
+        <Card isAuctionBid={true}/>
       </div>
       <span className="m-6">Skins disponíveis</span>
       <div className="flex flex-wrap">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        <Card isAuctionBid={false}/>
+        <Card isAuctionBid={false}/>
+        <Card isAuctionBid={false}/>
+        <Card isAuctionBid={false}/>
+        <Card isAuctionBid={false}/>
+        <Card isAuctionBid={false}/>
+        <Card isAuctionBid={false}/>
       </div>
       <div>
 

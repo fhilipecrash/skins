@@ -8,7 +8,7 @@ export function Login() {
   function handleSubscribe(event: FormEvent) {
     event.preventDefault();
     localStorage.setItem("name", name);
-    navigate("/app");
+    navigate("/home");
   }
 
   return (
