@@ -1,6 +1,7 @@
 import { Card } from "../components/Card";
 
 export function Home() {
+
   return (
     <div className="flex flex-col h-screen">
       <div className="m-6">
