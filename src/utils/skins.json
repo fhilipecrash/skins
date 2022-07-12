@@ -1,0 +1,22 @@
+[
+  {
+    "name": "ak47",
+    "price": 300
+  },
+  {
+    "name": "m4a1",
+    "price": 1500
+  },
+  {
+    "name": "awp",
+    "price": 500
+  },
+  {
+    "name": "p90",
+    "price": 150
+  },
+  {
+    "name": "karambit",
+    "price": 280
+  }
+]

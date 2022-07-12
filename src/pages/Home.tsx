@@ -1,5 +1,7 @@
 import { Card } from "../components/Card";
 
+import skins from "../utils/skins.json";
+
 export function Home() {
 
   return (
@@ -10,11 +12,11 @@ export function Home() {
       </div>
       <span className="m-6">Skins disponíveis</span>
       <div className="flex flex-wrap">
-        <Card name={'ak47'} price={300}/>
-        <Card name={'karambit'} price={280}/>
-        <Card name={'p90'} price={150}/>
-        <Card name={'m4a1'} price={600}/>
-        <Card name={'awp'} price={1500}/>
+        {
+          skins.map((skin) => (
+            <Card name={skin.name} price={skin.price}/>
+          ))
+        }
       </div>
     </div>
   )
