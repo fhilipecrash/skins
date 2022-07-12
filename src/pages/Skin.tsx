@@ -27,7 +27,7 @@ export function Skin() {
   const socket = io("http://localhost:3001");
   const [bid, setBid] = useState("");
   const [bidRecevied, setBidReceived] = useState([]);
-  const skins = useLocation().state;
+  const skins = useLocation().state as SkinProps;
 
   function makeBid() {
     socket.emit("make_bid", { name: localStorage.getItem("name"), bid: bid });
@@ -56,7 +56,7 @@ export function Skin() {
           <span className="text-2xl font-bold mb-10">Maior lance</span>
           <span className="text-5xl">R$ {bidRecevied}</span>
         </div>
-        <div className="rounded-2xl bg-green-400 w-[480px] h-[480px] mt-10 p-6 flex flex-col">
+        <div className="rounded-2xl bg-purple-400 w-[480px] h-[480px] mt-10 p-6 flex flex-col">
           {
             users.map((user) => (
               <User name={user.name} bid={user.bid}/>
