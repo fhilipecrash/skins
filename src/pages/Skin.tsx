@@ -5,17 +5,17 @@ import { useEffect, useState } from "react";
 export function Skin() {
   const users = [
     {
-      id: 1,
-      name: "Jane ",
+      name: "John",
+      bid: 100
     }, {
-      id: 2,
-      name: "Fhilipe"
+      name: "Jane",
+      bid: 200
     }, {
-      id: 3,
-      name: "Bruce"
+      name: "Jack",
+      bid: 300
     }, {
-      id: 4,
-      name: "Dave"
+      name: "Jill",
+      bid: 400
     }
   ];
   const socket = io("http://localhost:3001");
@@ -27,8 +27,11 @@ export function Skin() {
   } 
   useEffect(() => {
     socket.on("return_bid", (data) => {
-      setBidReceived(data);
+      setBidReceived(data.bid);
+      users.push(data);
+      console.log(data);
     })
+    console.log(users);
   }, [socket])
 
   return (
@@ -45,7 +48,7 @@ export function Skin() {
         <div className="rounded-2xl bg-green-400 w-[480px] h-[480px] mt-10 p-6 flex flex-col">
           {
             users.map((user) => (
-              <User name={user.name}/>
+              <User name={user.name} bid={user.bid}/>
             ))
           }
         </div>
