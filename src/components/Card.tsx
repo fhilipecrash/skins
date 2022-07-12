@@ -7,10 +7,12 @@ export function Card(props: any) {
         to={"/home/123"}
         className="border-3 rounded-2xl bg-blue-400 hover:bg-red-500 hover:shadow-lg hover:shadow-gray-500 w-52 h-52 m-6 p-6 transition-colors flex flex-col"
       >
-        <strong>Nome da skin</strong>
-        <span>Preço: $300</span>
-        <span>Seu lance: $500</span>
-        <span>Usuário cobriu seu lance</span>
+        <div className="bg-weapon-1">
+          <strong>Nome da skin</strong>
+          <span>Preço: $300</span>
+          <span>Seu lance: $500</span>
+          <span>Usuário cobriu seu lance</span>
+        </div>
       </Link>
     )
   } else {

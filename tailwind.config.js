@@ -4,7 +4,11 @@ module.exports = {
     './src/**/*.tsx'
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'weapon-1': 'url("/src/assets/weapon-1.png")',
+      }
+    },
   },
   plugins: [],
 }
