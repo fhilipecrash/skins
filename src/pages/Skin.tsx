@@ -1,6 +1,12 @@
 import { User } from "../components/User";
 import { io } from "socket.io-client"
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+
+interface SkinProps {
+  name: string;
+  price: number;
+}
 
 export function Skin() {
   const users = [
@@ -21,6 +27,7 @@ export function Skin() {
   const socket = io("http://localhost:3001");
   const [bid, setBid] = useState("");
   const [bidRecevied, setBidReceived] = useState([]);
+  const skins = useLocation().state;
 
   function makeBid() {
     socket.emit("make_bid", { name: localStorage.getItem("name"), bid: bid });
@@ -38,9 +45,12 @@ export function Skin() {
   return (
     <div className="flex flex-col h-screen px-16 py-4">
       <div className="flex flex-row justify-between">
-        <div className="rounded-2xl bg-blue-400 w-[480px] h-[480px] mt-10 p-6 flex flex-col">
-          <strong className="text-2xl">Nome da skin</strong>
-          <span>Preço inicial: $300</span>
+        <div 
+          className="rounded-2xl bg-blue-400 bg-no-repeat bg-center bg-contain w-[480px] h-[480px] mt-10 p-6 flex flex-col"
+          style={{ backgroundImage: `url(/src/assets/${skins.name}-lg.png)` }}
+        >
+          <strong className="text-2xl">{skins.name.toUpperCase()}</strong>
+          <span>Preço inicial: R$ {skins.price}</span>
         </div>
         <div className="rounded-2xl bg-gray-700 w-[200px] h-[200px] mt-36 shadow-lg flex flex-col items-center justify-center">
           <span className="text-2xl font-bold mb-10">Maior lance</span>
