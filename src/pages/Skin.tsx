@@ -24,7 +24,8 @@ export function Skin() {
 
   function makeBid() {
     socket.emit("make_bid", { name: localStorage.getItem("name"), bid: bid });
-  } 
+  }
+  
   useEffect(() => {
     socket.on("return_bid", (data) => {
       setBidReceived(data.bid);

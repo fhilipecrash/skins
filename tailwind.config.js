@@ -6,7 +6,11 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'weapon-1': 'url("/src/assets/weapon-1.png")',
+        'ak47': 'url("/src/assets/ak47.png")',
+        'karambit': 'url("/src/assets/karambit.png")',
+        'p90': 'url("/src/assets/p90.png")',
+        'm4a1': 'url("/src/assets/m4a1.png")',
+        'awp': 'url("/src/assets/awp.png")',
       }
     },
   },
