@@ -1,9 +1,17 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card } from "../components/Card";
-
 import skins from "../utils/skins.json";
 
 export function Home() {
+  const navigate = useNavigate();
+  const userName = localStorage.getItem("name") ?? null;
 
+  useEffect(() => {
+    if (userName === null) {
+      navigate("/");
+    }
+  })
   return (
     <div className="flex flex-col h-screen">
       <div className="m-6">

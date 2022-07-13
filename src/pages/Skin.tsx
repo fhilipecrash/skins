@@ -1,7 +1,8 @@
 import { User } from "../components/User";
 import { io } from "socket.io-client"
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import skins from "../utils/skins.json";
 
 interface SkinProps {
   name: string;
@@ -14,20 +15,33 @@ interface BidProps {
 }
 
 export function Skin() {
+  let { skinid } = useParams();
+  const navigate = useNavigate();
   const socket = io("http://localhost:3001");
   const [bid, setBid] = useState(0);
   const [bidRecevied, setBidReceived] = useState<BidProps[]>([]);
   const [usersList, setUsersList] = useState<BidProps[]>([]);
-  const skins = useLocation().state as SkinProps;
+  const [currentSkin, setCurrentSkin] = useState<SkinProps>({} as SkinProps);
+  const userName = localStorage.getItem("name") ?? null;
+
+  function getDataElement() {
+    const skin = skins.filter(skin => skin.name === skinid);
+    setCurrentSkin(skin[0]);
+  }
 
   function makeBid() {
-    const lastBid = usersList[usersList.length - 1].bid;
+    if (usersList.length > 0) {
+      const lastBid = usersList[usersList.length - 1].bid;
 
-    if (bid <= lastBid) {
-      alert("Informe um número maior que: " + lastBid)
+      if (bid <= lastBid) {
+        alert("Informe um número maior que: " + lastBid)
+      } else {
+        socket.emit("makeBid", { name: userName, bid: bid });
+        setBid(0);
+      }
     } else {
-      socket.emit("makeBid", { name: localStorage.getItem("name"), bid: bid });
-      setBid('' as any);
+      socket.emit("makeBid", { name: userName, bid: bid });
+      setBid(0);
     }
   }
 
@@ -35,26 +49,34 @@ export function Skin() {
     socket.on("returnBid", (data) => {
       setBidReceived(data.bid);
     });
-  
+
     socket.on("previousBids", (data) => {
       setUsersList(data);
     });
-  
+
     socket.on("updatedBids", (data) => {
       setUsersList(data);
     });
+
+    if (userName === null) {
+      navigate("/");
+    }
+
+    getDataElement();
   }, []);
 
   return (
     <div className="flex flex-col h-screen px-16 py-4">
       <div className="flex flex-row justify-between">
-        <div
-          className="rounded-2xl bg-blue-400 bg-no-repeat bg-center bg-contain w-[480px] h-[480px] mt-10 p-6 flex flex-col"
-          style={{ backgroundImage: `url(/src/assets/${skins.name}-lg.png)` }}
-        >
-          <strong className="text-2xl">{skins.name.toUpperCase()}</strong>
-          <span>Preço inicial: R$ {skins.price}</span>
-        </div>
+        {!!currentSkin.name && (
+          <div
+            className="rounded-2xl bg-blue-400 bg-no-repeat bg-center bg-contain w-[480px] h-[480px] mt-10 p-6 flex flex-col"
+            style={{ backgroundImage: `url(/src/assets/${currentSkin.name}-lg.png)` }}
+          >
+            <strong className="text-2xl">{currentSkin.name.toUpperCase()}</strong>
+            <span>Preço inicial: R$ {currentSkin.price}</span>
+          </div>
+        )}
         <div className="rounded-2xl bg-gray-700 w-[200px] h-[200px] mt-36 shadow-lg flex flex-col items-center justify-center">
           <span className="text-2xl font-bold mb-10">Maior lance</span>
           <span className="text-5xl">R$ {bidRecevied}</span>
