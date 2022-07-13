@@ -19,7 +19,7 @@ export function Skin() {
   const navigate = useNavigate();
   const socket = io("http://localhost:3001");
   const [bid, setBid] = useState(0);
-  const [bidRecevied, setBidReceived] = useState<BidProps[]>([]);
+  const [bidRecevied, setBidReceived] = useState([]);
   const [usersList, setUsersList] = useState<BidProps[]>([]);
   const [currentSkin, setCurrentSkin] = useState<SkinProps>({} as SkinProps);
   const userName = localStorage.getItem("name") ?? null;
