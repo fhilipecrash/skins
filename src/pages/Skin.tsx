@@ -8,38 +8,35 @@ interface SkinProps {
   price: number;
 }
 
+interface BidProps {
+  name: string;
+  bid: number;
+}
+
 export function Skin() {
-  const users = [
-    {
-      name: "John",
-      bid: 100
-    }, {
-      name: "Jane",
-      bid: 200
-    }, {
-      name: "Jack",
-      bid: 300
-    }, {
-      name: "Jill",
-      bid: 400
-    }
-  ];
+  let users: BidProps[] = [];
   const socket = io("http://localhost:3001");
-  const [bid, setBid] = useState("");
-  const [bidRecevied, setBidReceived] = useState([]);
+  const [bid, setBid] = useState(0);
+  const [bidRecevied, setBidReceived] = useState<BidProps[]>([]);
+  const [usersList, setUsersList] = useState([]);
   const skins = useLocation().state as SkinProps;
 
   function makeBid() {
-    socket.emit("make_bid", { name: localStorage.getItem("name"), bid: bid });
+    socket.emit("makeBid", { name: localStorage.getItem("name"), bid: bid });
   }
   
   useEffect(() => {
-    socket.on("return_bid", (data) => {
+    socket.on("returnBid", (data) => {
       setBidReceived(data.bid);
-      users.push(data);
-      console.log(data);
+    });
+
+    socket.on("previousBids", (data) => {
+      setUsersList(data);
     })
-    console.log(users);
+
+    socket.on("updatedBids", (data) => {
+      setUsersList(data);
+    })
   }, [socket])
 
   return (
@@ -58,8 +55,8 @@ export function Skin() {
         </div>
         <div className="rounded-2xl bg-purple-400 w-[480px] h-[480px] mt-10 p-6 flex flex-col">
           {
-            users.map((user) => (
-              <User name={user.name} bid={user.bid}/>
+            usersList.map((user: BidProps) => (
+              <User key={user.name} name={user.name} bid={user.bid}/>
             ))
           }
         </div>
@@ -67,7 +64,7 @@ export function Skin() {
       <div className="h-10 mt-8 items-center w-full flex justify-center">
         <input
           type="text"
-          onChange={event => setBid(event.target.value)}
+          onChange={event => setBid(+event.target.value)}
           placeholder="Informe o valor do lance"
           className="bg-gray-600 text-white placeholder:text-gray-400 rounded p-3 w-96"
         />
