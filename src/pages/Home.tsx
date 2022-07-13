@@ -13,8 +13,8 @@ export function Home() {
       <span className="m-6">Skins disponíveis</span>
       <div className="flex flex-wrap">
         {
-          skins.map((skin) => (
-            <Card name={skin.name} price={skin.price}/>
+          skins.map((skin, index) => (
+            <Card name={skin.name} price={skin.price} key={index} />
           ))
         }
       </div>
