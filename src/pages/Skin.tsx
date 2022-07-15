@@ -1,7 +1,7 @@
 import { User } from "../components/User";
 import { io } from "socket.io-client"
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import skins from "../utils/skins.json";
 
 interface SkinProps {
