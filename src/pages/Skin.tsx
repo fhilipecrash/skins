@@ -17,12 +17,12 @@ interface BidProps {
 export function Skin() {
   let { skinid } = useParams();
   const navigate = useNavigate();
-  const socket = io("http://localhost:3001");
   const [bid, setBid] = useState(0);
   const [bidRecevied, setBidReceived] = useState([]);
   const [usersList, setUsersList] = useState<BidProps[]>([]);
   const [currentSkin, setCurrentSkin] = useState<SkinProps>({} as SkinProps);
   const userName = localStorage.getItem("name") ?? null;
+  const socket = io("http://localhost:3001/");
 
   function getDataElement() {
     const skin = skins.filter(skin => skin.name === skinid);
@@ -46,12 +46,17 @@ export function Skin() {
   }
 
   useEffect(() => {
+    getDataElement();
+
+    socket.emit("makeRoom", skinid);
+
     socket.on("returnBid", (data) => {
       setBidReceived(data.bid);
     });
 
     socket.on("previousBids", (data) => {
       setUsersList(data);
+      setBidReceived(data[data.length - 1].bid);
     });
 
     socket.on("updatedBids", (data) => {
@@ -61,8 +66,6 @@ export function Skin() {
     if (userName === null) {
       navigate("/");
     }
-
-    getDataElement();
   }, []);
 
   return (
