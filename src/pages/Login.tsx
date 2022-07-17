@@ -1,5 +1,6 @@
 import { FormEvent, useState } from "react"
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png";
 
 export function Login() {
   const navigate = useNavigate();
@@ -13,8 +14,8 @@ export function Login() {
 
   return (
     <div>
-      <div>
-        <h1 className="text-3xl text-center text-white m-6">Skins</h1>
+      <div className="flex justify-center">
+        <img src={logo} className="w-32 h-16 mt-6"></img>  
       </div>
       <div className="flex flex-col justify-center items-center m-32">
         <div className="p-3">
