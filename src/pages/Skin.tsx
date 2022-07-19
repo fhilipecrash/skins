@@ -46,9 +46,9 @@ export function Skin() {
   }
 
   useEffect(() => {
-    getDataElement();
-
     socket.emit("makeRoom", skinid);
+    
+    getDataElement();
 
     socket.on("returnBid", (data) => {
       setBidReceived(data.bid);
