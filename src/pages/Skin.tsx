@@ -22,7 +22,7 @@ export function Skin() {
   const [usersList, setUsersList] = useState<BidProps[]>([]);
   const [currentSkin, setCurrentSkin] = useState<SkinProps>({} as SkinProps);
   const userName = localStorage.getItem("name") ?? null;
-  const socket = io("http://localhost:3001/");
+  const socket = io("http://localhost:3001/", { query: { room: skinid } });
 
   function getDataElement() {
     const skin = skins.filter(skin => skin.name === skinid);
@@ -46,8 +46,6 @@ export function Skin() {
   }
 
   useEffect(() => {
-    socket.emit("makeRoom", skinid);
-    
     getDataElement();
 
     socket.on("returnBid", (data) => {
@@ -99,7 +97,6 @@ export function Skin() {
           onChange={e => setBid(Number(e.target.value))}
           placeholder="Informe o valor do lance"
           className="bg-gray-600 text-white placeholder:text-gray-400 rounded p-3 w-96"
-          onSubmit={makeBid}
         />
         <button
           className="text-white w-28 h-12 rounded bg-red-500 hover:bg-red-400 mx-8"
