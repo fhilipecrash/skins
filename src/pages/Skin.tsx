@@ -22,7 +22,11 @@ export function Skin() {
   const [usersList, setUsersList] = useState<BidProps[]>([]);
   const [currentSkin, setCurrentSkin] = useState<SkinProps>({} as SkinProps);
   const userName = localStorage.getItem("name") ?? null;
+<<<<<<< HEAD
   const socket = io("https://skins-backend.herokuapp.com/", { query: { room: skinid } });
+=======
+  const socket = io("http://localhost:3001/", { query: { room: skinid } });
+>>>>>>> main
 
   function getDataElement() {
     const skin = skins.filter(skin => skin.name === skinid);
