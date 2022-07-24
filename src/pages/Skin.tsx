@@ -24,7 +24,6 @@ export function Skin() {
   const userName = localStorage.getItem("name") ?? null;
   const socket = io("https://skins-backend.herokuapp.com/", { query: { room: skinid } });
 
-
   function getDataElement() {
     const skin = skins.filter(skin => skin.name === skinid);
     setCurrentSkin(skin[0]);
